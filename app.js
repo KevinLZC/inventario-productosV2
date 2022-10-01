@@ -11,7 +11,7 @@ agregar.addEventListener('click', () => {
 	} else {
 		document.getElementById('resultado').innerHTML = `<p>${inventario.agregar(new Producto(codigo, nombre, cantidad, costo))}</p>` 
 	}
-})
+});
 
 const buscar = document.getElementById("btnBuscar");
 buscar.addEventListener('click', () => {
@@ -22,20 +22,20 @@ buscar.addEventListener('click', () => {
 	} else {
 		document.getElementById('resultado').innerHTML = "<p>El producto no existe.</p>";
 	}
-})
+});
 
 const eliminar = document.getElementById("btnEliminar");
 eliminar.addEventListener('click', () => {
 	let codigo = document.getElementById("codigo").value;
 	document.getElementById('resultado').innerHTML = inventario.eliminar(codigo)
-})
+});
 
 const listar = document.getElementById("btnListar");
 listar.addEventListener('click', () => {
 	document.getElementById('resultado').innerHTML = inventario.listar();
-})
+});
 
 const listarInverso = document.getElementById("btnListarInverso");
 listarInverso.addEventListener('click', () => {
 	document.getElementById('resultado').innerHTML = inventario.listarInvertido();
-})
+});
