@@ -7,14 +7,14 @@ class Inventario {
 		if(this.comprobarCodigo(nuevo.codigo)) {
 			return this.ordenar(nuevo)
 		} else {
-			return "<p>El código del producto está repetido, ingrese otro.</p>"
+			return false;
 		}
 	}
 
 	ordenar(nuevo) {
 		if(this.productos.length === 0 || this.productos[this.productos.length - 1].codigo < nuevo.codigo) {
 			this.productos.push(nuevo)
-			return `Se agrego el producto con el codigo: <strong>${nuevo.codigo}</strong>`
+			return true;
 		} 
 
 		for(let i = 0; i < this.productos.length; i++) {
@@ -23,7 +23,7 @@ class Inventario {
 					this.productos[j + 1] = this.productos[j]
 				}
 				this.productos[i] = nuevo
-				return `Se agrego el producto con el codigo: <strong>${nuevo.codigo}</strong>`
+				return true;
 			}
 		}
 	}
@@ -69,7 +69,7 @@ class Inventario {
 	eliminar(codigo) {
 		let posicion = this.buscarIndice(codigo)
 		if(posicion === -1) {
-			return '<p>El producto no existe.</p>';
+			return false;
 		}
 		let tmp = this.productos[posicion]
 		for(let j = posicion; j < this.productos.length - 1; j++) {
@@ -77,13 +77,13 @@ class Inventario {
 		}
 		this.productos[this.productos.length - 1] = tmp;
 		this.productos.pop()
-		return `<p>Se eliminó el producto con el código <strong>${codigo}</strong>.</p>`
+		return true;
 	}
 
 	listar() {
 		let listado = ""
 		if(this.productos.length === 0) {
-			return "<p>No existe ningún producto registrado.</p>"
+			return "No existe ningún producto registrado."
 		}
 		for(let i = 0; i < this.productos.length; i++) {
 			listado += this.productos[i].infoHTML();
@@ -91,10 +91,10 @@ class Inventario {
 		return listado
 	}
 
-	listarInvertido() {
+	listarInverso() {
 		let listado = ""
 		if(this.productos.length === 0) {
-			return "<p>No existe ningún producto registrado.</p>"
+			return "No existe ningún producto registrado."
 		}
 		for(let i = this.productos.length - 1; i >= 0; i--) {
 			listado += this.productos[i].infoHTML();
@@ -102,4 +102,3 @@ class Inventario {
 		return listado
 	}
 }
-

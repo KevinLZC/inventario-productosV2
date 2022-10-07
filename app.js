@@ -6,10 +6,13 @@ agregar.addEventListener('click', () => {
 	let nombre = document.getElementById("nombre").value;
 	let cantidad = document.getElementById("cantidad").value;
 	let costo = document.getElementById("costo").value;	
+	let estado = inventario.agregar(new Producto(codigo, nombre, cantidad, costo));
 	if(codigo === "" || nombre === "" || cantidad === "" || costo === "") {
 		document.getElementById('resultado').innerHTML = "<p>Favor de rellenar todos los campos.</p>"
-	} else {
-		document.getElementById('resultado').innerHTML = `<p>${inventario.agregar(new Producto(codigo, nombre, cantidad, costo))}</p>` 
+	} else if(estado === true){
+		document.getElementById('resultado').innerHTML = `<p>Se agrego el producto con el código: ${codigo}</p>`;
+	} else if(estado === false){
+		document.getElementById('resultado').innerHTML = '<p>El código del producto está repetido, ingrese otro</p>'
 	}
 });
 
@@ -27,17 +30,22 @@ buscar.addEventListener('click', () => {
 const eliminar = document.getElementById("btnEliminar");
 eliminar.addEventListener('click', () => {
 	let codigo = document.getElementById("codigo").valueAsNumber;
-	document.getElementById('resultado').innerHTML = inventario.eliminar(codigo)
+	let estado = inventario.eliminar(codigo);
+	if(estado === true) {
+		document.getElementById('resultado').innerHTML = `<p>Se eliminó el producto con el código: <strong>${codigo}</strong></p>`;
+	} else if(estado === false) {
+		document.getElementById('resultado').innerHTML = '<p>El producto no existe</p>';
+	}
 });
 
 const listar = document.getElementById("btnListar");
 listar.addEventListener('click', () => {
-	document.getElementById('resultado').innerHTML = inventario.listar();
+	document.getElementById('resultado').innerHTML = `<p>${inventario.listar()}</p>` ;
 });
 
 const listarInverso = document.getElementById("btnListarInverso");
 listarInverso.addEventListener('click', () => {
-	document.getElementById('resultado').innerHTML = inventario.listarInvertido();
+	document.getElementById('resultado').innerHTML = `<p>${inventario.listarInverso()}</p>`;
 });
 
 const limpiar = document.getElementById('btnLimpiar');
