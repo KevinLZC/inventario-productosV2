@@ -68,16 +68,18 @@ class Inventario {
 
 	eliminar(codigo) {
 		let posicion = this.buscarIndice(codigo)
+		let producto = this.productos[posicion];
 		if(posicion === -1) {
-			return false;
+			return null;
 		}
+
 		let tmp = this.productos[posicion]
 		for(let j = posicion; j < this.productos.length - 1; j++) {
 			this.productos[j] = this.productos[j+1]
 		}
 		this.productos[this.productos.length - 1] = tmp;
 		this.productos.pop()
-		return true;
+		return producto;
 	}
 
 	listar() {

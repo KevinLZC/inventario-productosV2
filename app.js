@@ -30,10 +30,10 @@ buscar.addEventListener('click', () => {
 const eliminar = document.getElementById("btnEliminar");
 eliminar.addEventListener('click', () => {
 	let codigo = document.getElementById("codigo").valueAsNumber;
-	let estado = inventario.eliminar(codigo);
-	if(estado === true) {
-		document.getElementById('resultado').innerHTML = `<p>Se eliminó el producto con el código: <strong>${codigo}</strong></p>`;
-	} else if(estado === false) {
+	let producto = inventario.eliminar(codigo);
+	if(producto !== null) {
+		document.getElementById('resultado').innerHTML = producto.infoHTML();
+	} else {
 		document.getElementById('resultado').innerHTML = '<p>El producto no existe</p>';
 	}
 });
