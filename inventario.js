@@ -5,11 +5,27 @@ class Inventario {
 
 	agregar(nuevo) {
 		if(this.comprobarCodigo(nuevo.codigo)) {
-			this.productos.push(nuevo);
-			return "<p>Se agregó correctamente.</p>"
+			return this.ordenar(nuevo)
+		} else {
+			return "<p>El código del producto está repetido, ingrese otro.</p>"
 		}
-		
-		return "<p>El código del producto está repetido, ingrese otro.</p>"
+	}
+
+	ordenar(nuevo) {
+		if(this.productos.length === 0 || this.productos[this.productos.length - 1].codigo < nuevo.codigo) {
+			this.productos.push(nuevo)
+			return `Se agrego el producto con el codigo: <strong>${nuevo.codigo}</strong>`
+		} 
+
+		for(let i = 0; i < this.productos.length; i++) {
+			if(nuevo.codigo < this.productos[i].codigo) {
+				for(let j = this.productos.length - 1; j >= i; j--) {
+					this.productos[j + 1] = this.productos[j]
+				}
+				this.productos[i] = nuevo
+				return `Se agrego el producto con el codigo: <strong>${nuevo.codigo}</strong>`
+			}
+		}
 	}
 
 	comprobarCodigo(codigo) {
@@ -22,27 +38,46 @@ class Inventario {
 	}
 
 	buscar(codigo) {
-		for(let i = 0; i < this.productos.length; i++) {
-			if(codigo === this.productos[i].codigo) {
-				return this.productos[i];
-			}
+		if(this.buscarIndice(codigo) !== -1) {
+			return this.productos[this.buscarIndice(codigo)];
+		} else {
+			return null;
 		}
-		return null;
 	}
 
-	eliminar(codigo) {
-		for(let i = 0; i < this.productos.length; i++) {
-			if(codigo === this.productos[i].codigo) {
-				let tmp = this.productos[i]
-				for(let j = i; j < this.productos.length - 1; j++) {
-					this.productos[j] = this.productos[j+1]
-				}
-				this.productos[this.productos.length - 1] = tmp;
-				this.productos.pop()
-				return `<p>Se eliminó el producto con el código <strong>${codigo}</strong>.</p>`
+	buscarIndice(codigo) {
+		if(this.productos.length === 1 && this.productos[0].codigo === codigo) {
+			return 0;
+		}
+
+		let inicio = 0; 
+		let final = this.productos.length - 1;
+
+    while(inicio <= final) {
+      let medio = Math.floor(( inicio + final ) / 2);
+      if(this.productos[medio].codigo === codigo) {
+				return medio;
+			} else if(this.productos[medio].codigo > codigo){
+				final = medio - 1;
+			} else {
+				inicio = medio + 1;
 			}
 		}
-			return "<p>No existe el producto.</p>"
+		return -1;
+}
+
+	eliminar(codigo) {
+		let posicion = this.buscarIndice(codigo)
+		if(posicion === -1) {
+			return '<p>El producto no existe.</p>';
+		}
+		let tmp = this.productos[posicion]
+		for(let j = posicion; j < this.productos.length - 1; j++) {
+			this.productos[j] = this.productos[j+1]
+		}
+		this.productos[this.productos.length - 1] = tmp;
+		this.productos.pop()
+		return `<p>Se eliminó el producto con el código <strong>${codigo}</strong>.</p>`
 	}
 
 	listar() {
@@ -67,3 +102,4 @@ class Inventario {
 		return listado
 	}
 }
+

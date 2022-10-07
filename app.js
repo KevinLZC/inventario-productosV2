@@ -2,7 +2,7 @@ const inventario = new Inventario();
 
 const agregar = document.getElementById("btnAgregar");
 agregar.addEventListener('click', () => {
-	let codigo = document.getElementById("codigo").value;
+	let codigo = document.getElementById("codigo").valueAsNumber;
 	let nombre = document.getElementById("nombre").value;
 	let cantidad = document.getElementById("cantidad").value;
 	let costo = document.getElementById("costo").value;	
@@ -15,7 +15,7 @@ agregar.addEventListener('click', () => {
 
 const buscar = document.getElementById("btnBuscar");
 buscar.addEventListener('click', () => {
-	let codigo = document.getElementById("codigo").value;
+	let codigo = document.getElementById("codigo").valueAsNumber;
 	let producto = inventario.buscar(codigo);
 	if(producto !== null) {
 		document.getElementById('resultado').innerHTML = producto.infoHTML();
@@ -26,7 +26,7 @@ buscar.addEventListener('click', () => {
 
 const eliminar = document.getElementById("btnEliminar");
 eliminar.addEventListener('click', () => {
-	let codigo = document.getElementById("codigo").value;
+	let codigo = document.getElementById("codigo").valueAsNumber;
 	document.getElementById('resultado').innerHTML = inventario.eliminar(codigo)
 });
 
@@ -39,3 +39,9 @@ const listarInverso = document.getElementById("btnListarInverso");
 listarInverso.addEventListener('click', () => {
 	document.getElementById('resultado').innerHTML = inventario.listarInvertido();
 });
+
+const limpiar = document.getElementById('btnLimpiar');
+limpiar.addEventListener('click', () => {
+	document.getElementById('frmProducto').reset();
+	document.getElementById('resultado').innerHTML = "";
+})
